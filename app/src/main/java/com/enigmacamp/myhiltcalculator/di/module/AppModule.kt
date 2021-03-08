@@ -3,6 +3,8 @@ package com.enigmacamp.myhiltcalculator.di.module
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.enigmacamp.myhiltcalculator.data.api.interceptor.AuthTokenInterceptor
 import com.enigmacamp.myhiltcalculator.util.AppConstant
 import dagger.Module
@@ -46,7 +48,15 @@ class AppModule {
     @Singleton
     @Provides
     fun provideSharePref(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences("CalculatorSharedPref", Context.MODE_PRIVATE)
+        val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+        val sharedPref = EncryptedSharedPreferences.create(
+            "CalculatorSharedPref",
+            masterKeyAlias,
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        return sharedPref
     }
 
 }

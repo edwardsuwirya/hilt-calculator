@@ -6,10 +6,17 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.enigmacamp.myhiltcalculator.data.model.CalculatorRequest
 import com.enigmacamp.myhiltcalculator.data.repository.CalculatorRepository
+import com.enigmacamp.myhiltcalculator.di.qualifier.GetCalculator
+import com.enigmacamp.myhiltcalculator.di.qualifier.PostCalculator
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withTimeout
+import javax.inject.Inject
+import javax.inject.Named
 
-class MainActivityViewModel(private val repository: CalculatorRepository) : ViewModel() {
+@HiltViewModel
+class MainActivityViewModel @Inject constructor(@PostCalculator private val repository: CalculatorRepository) :
+    ViewModel() {
 
     fun doCalculatorCount() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
         withTimeout(2000) {

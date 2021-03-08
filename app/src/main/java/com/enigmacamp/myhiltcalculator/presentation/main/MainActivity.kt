@@ -9,7 +9,9 @@ import com.enigmacamp.myhiltcalculator.R
 import com.enigmacamp.myhiltcalculator.data.repository.CalculatorRepositoryGetImpl
 import com.enigmacamp.myhiltcalculator.data.repository.CalculatorRepositoryPostImpl
 import com.enigmacamp.myhiltcalculator.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var binding: ActivityMainBinding
@@ -32,13 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                val getRepo = CalculatorRepositoryPostImpl()
-                return MainActivityViewModel(getRepo) as T
-            }
-
-        }).get(MainActivityViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
     }
 
 }

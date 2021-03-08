@@ -15,14 +15,14 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(@PostCalculator private val repository: CalculatorRepository) :
+class MainActivityViewModel @Inject constructor(@GetCalculator private val repository: CalculatorRepository) :
     ViewModel() {
 
     fun doCalculatorCount() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
         withTimeout(2000) {
             try {
                 emit("Please Wait")
-                val response = repository.doCount(CalculatorRequest(4, 7, "mul"))
+                val response = repository.doCount(CalculatorRequest(1, 2, "add"))
                 emit((response.res).toString())
             } catch (e: Exception) {
                 Log.d("Calc", e.toString())

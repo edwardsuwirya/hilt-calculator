@@ -2,10 +2,7 @@ package com.enigmacamp.myhiltcalculator.data.api
 
 import com.enigmacamp.myhiltcalculator.data.model.CalculatorRequest
 import com.enigmacamp.myhiltcalculator.data.model.CalculatorResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface CalculatorApi {
     @GET("/")

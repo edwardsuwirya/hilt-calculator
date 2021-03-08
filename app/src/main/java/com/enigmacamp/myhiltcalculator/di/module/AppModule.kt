@@ -1,10 +1,14 @@
 package com.enigmacamp.myhiltcalculator.di.module
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import com.enigmacamp.myhiltcalculator.data.api.interceptor.AuthTokenInterceptor
 import com.enigmacamp.myhiltcalculator.util.AppConstant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -37,6 +41,12 @@ class AppModule {
             .client(okHttpClient)
             .addConverterFactory(moshi)
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideSharePref(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("CalculatorSharedPref", Context.MODE_PRIVATE)
     }
 
 }
